@@ -20,8 +20,8 @@ async function ensureSchema() {
   const sql = await getSql();
   if (!sql) return;
   if (!schemaReadyPromise) {
-    schemaReadyPromise = Promise.all([
-      sql`
+    schemaReadyPromise = (async () => {
+      await sql`
         create table if not exists day_plans (
           id text primary key,
           plan_date date not null unique,
@@ -32,8 +32,8 @@ async function ensureSchema() {
           image_data_url text not null,
           break_minutes integer not null
         )
-      `,
-      sql`
+      `;
+      await sql`
         create table if not exists math_sessions (
           id text primary key,
           created_at timestamptz not null,
@@ -44,12 +44,12 @@ async function ensureSchema() {
           plan_date date not null,
           batches jsonb not null
         )
-      `,
-      sql`alter table day_plans add column if not exists plan_date date`,
-      sql`alter table day_plans add column if not exists updated_at timestamptz`,
-      sql`alter table math_sessions add column if not exists plan_date date`,
-      sql`create unique index if not exists day_plans_plan_date_key on day_plans (plan_date)`,
-    ]);
+      `;
+      await sql`alter table day_plans add column if not exists plan_date date`;
+      await sql`alter table day_plans add column if not exists updated_at timestamptz`;
+      await sql`alter table math_sessions add column if not exists plan_date date`;
+      await sql`create unique index if not exists day_plans_plan_date_key on day_plans (plan_date)`;
+    })();
   }
   await schemaReadyPromise;
 }
