@@ -8,7 +8,7 @@ module.exports = async function handler(request, response) {
     return;
   }
 
-  const planDate = String(request.body?.planDate || new Date().toISOString().slice(0, 10)).slice(0, 10);
+  const planDate = String(request.body?.planDate || new Date().toISOString().slice(0, 10));
   const plan = await getDayPlanByDate(planDate);
   if (!plan) {
     response.status(400).json({ error: `No day plan saved for ${planDate}` });

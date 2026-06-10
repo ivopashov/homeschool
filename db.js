@@ -222,7 +222,7 @@ async function getSessions(limit = 10) {
 function mapDayPlan(row) {
   return {
     id: row.id,
-    planDate: String(row.plan_date || row.planDate).slice(0, 10),
+    planDate: normalizeDate(row.plan_date || row.planDate),
     createdAt: row.created_at || row.createdAt,
     updatedAt: row.updated_at || row.updatedAt,
     instructions: row.instructions,
@@ -240,13 +240,29 @@ function mapSession(row) {
     currentBatchNumber: row.current_batch_number || row.currentBatchNumber,
     breakMinutes: row.break_minutes || row.breakMinutes,
     dayPlanId: row.day_plan_id || row.dayPlanId,
-    planDate: String(row.plan_date || row.planDate).slice(0, 10),
+    planDate: normalizeDate(row.plan_date || row.planDate),
     batches: Array.isArray(row.batches) ? row.batches : JSON.parse(row.batches || "[]"),
   };
 }
 
 function normalizeDate(value) {
-  return String(value || new Date().toISOString().slice(0, 10)).slice(0, 10);
+  if (!value) return new Date().toISOString().slice(0, 10);
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+
+  const raw = String(value).trim();
+  const isoMatch = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (isoMatch) return `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
+
+  const dottedMatch = raw.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (dottedMatch) {
+    const [, day, month, year] = dottedMatch;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+
+  const parsed = new Date(raw);
+  if (!Number.isNaN(parsed.getTime())) return parsed.toISOString().slice(0, 10);
+
+  return raw.slice(0, 10);
 }
 
 module.exports = {

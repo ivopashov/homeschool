@@ -54,6 +54,8 @@ async function startSession() {
   const response = await fetchJson("/api/start-math-session", { planDate: todayString() });
   if (!response.ok) {
     setBusy(`Could not start. Save a parent day plan for ${todayString()} first.`);
+    document.querySelector("#planDate").value = todayString();
+    loadDayPlanForDate();
     return;
   }
   state.session = response.session;
