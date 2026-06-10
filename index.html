@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Math Adventure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="App navigation">
+        <div class="brand">
+          <div class="brand-mark">MA</div>
+          <div>
+            <p>Konstantin</p>
+            <strong>Math Adventure</strong>
+          </div>
+        </div>
+        <nav class="nav-tabs" aria-label="Views">
+          <button class="nav-tab active" data-view="kid" type="button">Kid Session</button>
+          <button class="nav-tab" data-view="parent" type="button">Parent Setup</button>
+          <button class="nav-tab" data-view="history" type="button">History</button>
+        </nav>
+        <div class="profile-card">
+          <div class="avatar">K</div>
+          <div>
+            <p>Today</p>
+            <strong id="sessionStatus">No active session</strong>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Math-only adaptive workflow</p>
+            <h1>Three Batches, Smart Breaks</h1>
+          </div>
+          <div class="top-actions">
+            <button class="ghost-button" id="refreshHistory" type="button">Refresh History</button>
+            <button class="primary-button" id="startSession" type="button">Start Math</button>
+          </div>
+        </header>
+
+        <section class="view active" id="kidView">
+          <div class="hero-grid">
+            <section class="mission-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow" id="batchEyebrow">Ready</p>
+                  <h2 id="batchTitle">Start today’s math session</h2>
+                </div>
+                <span class="streak" id="batchPill">0 / 3 batches</span>
+              </div>
+              <p class="activity-brief" id="batchBrief">The parent generates the day first. Then Start Math creates 10 multiple-choice questions from the parent notes and previous saved answers.</p>
+              <div class="progress-wrap">
+                <div>
+                  <span id="scoreLabel">0 answered</span>
+                  <small id="progressLabel">No batch active</small>
+                </div>
+                <div class="progress-track">
+                  <div class="progress-fill" id="progressFill"></div>
+                </div>
+              </div>
+              <div class="question-stack" id="questionStack"></div>
+            </section>
+
+            <section class="coach-panel">
+              <div class="coach-orbit">
+                <div class="planet planet-one"></div>
+                <div class="planet planet-two"></div>
+                <div class="coach-core">10</div>
+              </div>
+              <h2 id="coachTitle">Math Coach</h2>
+              <p id="coachMessage">Answer one question at a time. If an answer is wrong, the app shows the explanation and saves it for the next generated batch.</p>
+              <div class="coach-actions">
+                <button class="ghost-button" id="resetSession" type="button">Reset Local Session</button>
+              </div>
+            </section>
+          </div>
+
+          <section class="timer-panel break-panel" id="breakPanel" hidden>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Break timer</p>
+                <h2 id="breakTimer">05:00</h2>
+              </div>
+              <span class="pill">Next batch after break</span>
+            </div>
+            <div class="timer-ring" aria-hidden="true">
+              <div class="timer-inner" id="breakPercent">100%</div>
+            </div>
+            <div class="timer-actions">
+              <button class="primary-button" id="startBreak" type="button">Start Break</button>
+              <button class="ghost-button" id="skipBreak" type="button">Skip Break</button>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="parentView">
+          <div class="parent-grid">
+            <section class="parent-panel wide">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Parent setup</p>
+                  <h2>Plan a Math Day</h2>
+                </div>
+                <button class="primary-button" id="saveDayPlan" type="button">Save Plan</button>
+              </div>
+              <div class="form-grid">
+                <div class="sample-box">
+                  <label for="planDate">Plan date</label>
+                  <input id="planDate" type="date" />
+                  <p class="muted">Start Math uses the plan for today’s date.</p>
+                </div>
+                <div class="sample-box">
+                  <label for="breakMinutes">Break length</label>
+                  <select id="breakMinutes">
+                    <option value="5">5 minutes</option>
+                    <option value="7">7 minutes</option>
+                    <option value="10">10 minutes</option>
+                  </select>
+                </div>
+              </div>
+              <div class="sample-box">
+                <label for="parentInstructions">What should be stressed today?</label>
+                <textarea id="parentInstructions" placeholder="Example: focus on fractions, multi-step word problems, reading the question carefully, and explaining why an answer is wrong."></textarea>
+              </div>
+              <div class="sample-box">
+                <label for="mathSamples">Paste similar math problems</label>
+                <textarea id="mathSamples" placeholder="Example: What is 3/4 of 32?&#10;A racket costs 80 leva after a 20% discount. What was the original price?"></textarea>
+              </div>
+              <div class="form-grid">
+                <div class="sample-box">
+                  <label for="problemImage">Upload image of problems</label>
+                  <input id="problemImage" type="file" accept="image/*" />
+                  <p class="muted" id="imageStatus">Optional. The image is sent to the server as context when generating.</p>
+                </div>
+              </div>
+              <p id="dayPlanStatus" class="muted">Choose a date to create or edit that day’s instructions.</p>
+            </section>
+
+            <section class="parent-panel">
+              <div class="panel-heading">
+                <div>
+                  <p class="eyebrow">Saved plans</p>
+                  <h2>Plan Dates</h2>
+                </div>
+              </div>
+              <div class="plan-list" id="planList"></div>
+            </section>
+
+            <section class="parent-panel">
+              <p class="eyebrow">Loop</p>
+              <h2>How It Runs</h2>
+              <div class="signal-list">
+                <div><span>Batch size</span><strong>10 MCQ</strong></div>
+                <div><span>Break</span><strong>5-10 min</strong></div>
+                <div><span>Finish</span><strong>3 batches</strong></div>
+              </div>
+            </section>
+
+            <section class="parent-panel">
+              <p class="eyebrow">Generator</p>
+              <h2>LLM Context</h2>
+              <p class="muted">Each batch uses parent notes, pasted/image examples, yesterday’s saved answers, and the previous batch’s mistakes.</p>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="historyView">
+          <section class="parent-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Saved database records</p>
+                <h2>Recent Sessions</h2>
+              </div>
+            </div>
+            <div class="history-list" id="historyList"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

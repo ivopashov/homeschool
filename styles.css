@@ -1,0 +1,911 @@
+:root {
+  --ink: #172033;
+  --muted: #667085;
+  --line: #d9e1e7;
+  --paper: #f7faf8;
+  --panel: #ffffff;
+  --green: #1f9d66;
+  --teal: #0e7490;
+  --yellow: #f5b700;
+  --red: #e05252;
+  --blue: #3467eb;
+  --shadow: 0 18px 60px rgba(28, 45, 64, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(245, 183, 0, 0.16), transparent 34%),
+    linear-gradient(135deg, #edf6f1 0%, #f8fbff 52%, #fff8e6 100%);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  border: 0;
+  cursor: pointer;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.74);
+  border-right: 1px solid rgba(23, 32, 51, 0.08);
+  backdrop-filter: blur(20px);
+}
+
+.brand,
+.profile-card,
+.panel-heading,
+.topbar,
+.top-actions,
+.timer-actions,
+.coach-actions {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand-mark,
+.avatar {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+}
+
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--green), var(--teal));
+}
+
+.brand p,
+.profile-card p,
+.eyebrow,
+.progress-wrap small,
+.muted {
+  margin: 0;
+  color: var(--muted);
+}
+
+.brand strong,
+.profile-card strong {
+  display: block;
+}
+
+.nav-tabs {
+  display: grid;
+  gap: 10px;
+}
+
+.nav-tab {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  font-weight: 800;
+}
+
+.nav-tab.active {
+  background: #172033;
+  color: #fff;
+}
+
+.profile-card {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #eef7f2;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+
+main {
+  padding: 28px;
+}
+
+.topbar {
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.topbar h1,
+h2,
+h3 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.topbar h1 {
+  font-size: 34px;
+}
+
+.eyebrow {
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.top-actions,
+.timer-actions,
+.coach-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-weight: 800;
+}
+
+.primary-button {
+  background: var(--ink);
+  color: #fff;
+}
+
+.ghost-button {
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+  gap: 18px;
+}
+
+.dashboard-grid,
+.parent-grid,
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.mission-panel,
+.coach-panel,
+.timer-panel,
+.vault-panel,
+.skill-panel,
+.parent-panel,
+.library-panel,
+.activity-panel {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgba(23, 32, 51, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.activity-panel {
+  margin-bottom: 18px;
+}
+
+.activity-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 18px;
+}
+
+.activity-brief {
+  margin: 0 0 16px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.question-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.question-card {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.question-card label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.question-card input,
+.question-card textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbff;
+  color: var(--ink);
+  outline: none;
+}
+
+.question-card textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.sample-box {
+  display: grid;
+  gap: 8px;
+}
+
+.sample-box label {
+  font-weight: 800;
+}
+
+.sample-box textarea {
+  width: 100%;
+  min-height: 150px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbff;
+  color: var(--ink);
+  resize: vertical;
+}
+
+.sample-box input,
+.sample-box select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbff;
+  color: var(--ink);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.question-result {
+  min-height: 20px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.question-result.correct {
+  color: var(--green);
+}
+
+.question-result.needs-work {
+  color: var(--red);
+}
+
+.continue-button {
+  margin-top: 12px;
+}
+
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #eef7f2;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.single-question h3 {
+  margin: 8px 0 16px;
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.choice-button {
+  min-height: 62px;
+  padding: 12px;
+  border: 2px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbff;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.choice-button:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: #eef4ff;
+}
+
+.choice-button.correct {
+  border-color: var(--green);
+  background: #e9f8f0;
+  color: #0a6840;
+}
+
+.choice-button.wrong {
+  border-color: var(--red);
+  background: #fff0f0;
+  color: #a62929;
+}
+
+.choice-button:disabled {
+  cursor: default;
+}
+
+.visual-question {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin: 0 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.visual-question polygon {
+  fill: #f5b700;
+  stroke: #172033;
+  stroke-width: 3;
+}
+
+.break-panel {
+  margin-top: 18px;
+}
+
+.history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.history-item,
+.plan-date-button {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.plan-list {
+  display: grid;
+  gap: 8px;
+}
+
+.plan-date-button {
+  width: 100%;
+  color: var(--ink);
+  text-align: left;
+}
+
+.plan-date-button.active {
+  border-color: var(--blue);
+  background: #eef4ff;
+}
+
+.plan-date-button small {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.history-item span {
+  color: var(--muted);
+}
+
+.feedback-box {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #172033;
+  color: #fff;
+}
+
+.feedback-box .eyebrow,
+.feedback-box p {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.feedback-box h3 {
+  color: #fff;
+}
+
+.feedback-box .ghost-button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.feedback-box .primary-button {
+  background: #fff;
+  color: var(--ink);
+}
+
+.feedback-box button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.panel-heading {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.streak,
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #fff4cc;
+  color: #5f4500;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.pill {
+  background: #e9f2ff;
+  color: #153c8a;
+}
+
+.progress-wrap {
+  display: grid;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.progress-wrap > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#xpLabel {
+  font-weight: 900;
+}
+
+.progress-track {
+  height: 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf1f4;
+}
+
+.progress-fill {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--yellow));
+  transition: width 220ms ease;
+}
+
+.mission-list {
+  display: grid;
+  gap: 10px;
+}
+
+.mission {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.mission.done {
+  background: #effaf4;
+}
+
+.mission-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: #eef7f2;
+  font-weight: 900;
+}
+
+.mission h3 {
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.mission p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.check-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #edf1f4;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+.mission.done .check-button {
+  background: var(--green);
+  color: #fff;
+}
+
+.coach-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.coach-orbit {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 4px auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1b3345, #2f6f67);
+  overflow: hidden;
+}
+
+.coach-core,
+.planet {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.coach-core {
+  inset: 48px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--teal);
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.planet-one {
+  width: 44px;
+  height: 44px;
+  top: 18px;
+  left: 20px;
+  background: var(--yellow);
+}
+
+.planet-two {
+  width: 26px;
+  height: 26px;
+  right: 22px;
+  bottom: 34px;
+  background: #ff7a59;
+}
+
+.coach-panel p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.timer-panel,
+.vault-panel,
+.skill-panel {
+  min-height: 310px;
+}
+
+.timer-ring {
+  display: grid;
+  width: 172px;
+  height: 172px;
+  margin: 8px auto 16px;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--green) 360deg, #edf1f4 0deg);
+}
+
+.timer-inner {
+  display: grid;
+  width: 126px;
+  height: 126px;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  font-weight: 900;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 4px;
+  border-radius: 8px;
+  background: #edf1f4;
+}
+
+.segmented button {
+  min-height: 36px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.segmented button.active {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 8px 22px rgba(28, 45, 64, 0.1);
+}
+
+.timer-actions {
+  margin-top: 12px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.collect-card {
+  min-height: 98px;
+  padding: 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fff7d7, #eaf8f3);
+  border: 1px solid var(--line);
+}
+
+.collect-card.locked {
+  filter: grayscale(1);
+  opacity: 0.52;
+}
+
+.collect-card strong {
+  display: block;
+  margin-top: 18px;
+}
+
+.life-card {
+  margin: 0;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f8fbff;
+  border: 1px solid var(--line);
+}
+
+.life-card h3 {
+  margin-bottom: 8px;
+}
+
+.life-card p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.slider-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.slider-row {
+  display: grid;
+  gap: 8px;
+}
+
+.slider-row label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 800;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--green);
+}
+
+.signal-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.signal-list div,
+.preview-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f7faf8;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.preview-item {
+  display: block;
+}
+
+.preview-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.library-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.library-panel {
+  min-height: 190px;
+}
+
+.library-panel p:last-child {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 980px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .profile-card {
+    position: static;
+  }
+
+  .nav-tabs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .nav-tab {
+    text-align: center;
+  }
+
+  main {
+    padding: 18px;
+  }
+
+  .topbar,
+  .hero-grid,
+  .activity-layout,
+  .form-grid,
+  .dashboard-grid,
+  .parent-grid,
+  .library-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-box {
+    position: static;
+  }
+
+  .topbar {
+    display: grid;
+  }
+
+  .wide {
+    grid-column: auto;
+  }
+
+  .preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .topbar h1 {
+    font-size: 27px;
+  }
+
+  .nav-tabs,
+  .slider-grid,
+  .preview-grid,
+  .card-grid,
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission {
+    grid-template-columns: auto 1fr;
+  }
+
+  .mission .check-button {
+    grid-column: 1 / -1;
+    width: 100%;
+    border-radius: 8px;
+  }
+}
