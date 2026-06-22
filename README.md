@@ -9,6 +9,8 @@ Math-only homeschool web app for a child workflow:
 - OpenAI generates adaptive questions when configured
 - Neon/Postgres stores data in production
 
+Production URL: https://homeschool-red.vercel.app/
+
 ## Local Setup
 
 Install dependencies:
